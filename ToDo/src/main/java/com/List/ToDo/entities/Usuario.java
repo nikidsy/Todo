@@ -1,9 +1,8 @@
 package com.List.ToDo.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Usuario {
@@ -11,13 +10,15 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
     private String email;
     private String senha;
 
-    public Usuario() {
-    	
-    }
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tarefa> tarefas = new ArrayList<>();
+
+    public Usuario() {}
 
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
@@ -32,6 +33,7 @@ public class Usuario {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -39,6 +41,7 @@ public class Usuario {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -46,7 +49,12 @@ public class Usuario {
     public String getSenha() {
         return senha;
     }
+
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Tarefa> getTarefas() {
+        return tarefas;
     }
 }

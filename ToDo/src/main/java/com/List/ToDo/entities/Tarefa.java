@@ -1,11 +1,7 @@
 package com.List.ToDo.entities;
 
 import java.time.LocalDate;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Tarefa {
@@ -15,13 +11,16 @@ public class Tarefa {
     private Long id;
     private String nome;
     private String descricao;
+    @Enumerated(EnumType.STRING)
     private Status status;
     private LocalDate dtInicio;
     private LocalDate dtFim;
 
-    public Tarefa() {
-    	
-    }
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    public Tarefa() {}
 
     public Tarefa(String nome, String descricao, Status status) {
         this.nome = nome;
@@ -37,6 +36,7 @@ public class Tarefa {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -44,6 +44,7 @@ public class Tarefa {
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
@@ -51,6 +52,7 @@ public class Tarefa {
     public Status getStatus() {
         return status;
     }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -58,6 +60,7 @@ public class Tarefa {
     public LocalDate getDtInicio() {
         return dtInicio;
     }
+
     public void setDtInicio(LocalDate dtInicio) {
         this.dtInicio = dtInicio;
     }
@@ -65,7 +68,16 @@ public class Tarefa {
     public LocalDate getDtFim() {
         return dtFim;
     }
+
     public void setDtFim(LocalDate dtFim) {
         this.dtFim = dtFim;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

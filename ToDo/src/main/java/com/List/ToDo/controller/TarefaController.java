@@ -2,13 +2,13 @@ package com.List.ToDo.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import com.List.ToDo.dto.TarefaRequestDTO;
 import com.List.ToDo.dto.TarefaResponseDTO;
 import com.List.ToDo.service.TarefaService;
 
 @RestController
-@RequestMapping("/tarefa")
 public class TarefaController {
 
     private final TarefaService tarefaService;
@@ -16,40 +16,39 @@ public class TarefaController {
     public TarefaController(TarefaService tarefaService) {
         this.tarefaService = tarefaService;
     }
+    @PostMapping("/usuarios/{id}/tarefas")
+    public ResponseEntity<TarefaResponseDTO> criar(
+            @PathVariable Long id,
+            @RequestBody TarefaRequestDTO dto) {
 
-    @PostMapping
-    public ResponseEntity<TarefaResponseDTO> criar(@RequestBody TarefaRequestDTO dto) {
-        return ResponseEntity.ok(tarefaService.criarTarefa(dto));
+        return ResponseEntity.ok(
+                tarefaService.criarTarefaParaUsuario(id, dto)
+        );
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> buscar(@PathVariable long id) {
-        try {
-            TarefaResponseDTO tarefa = tarefaService.buscarPorId(id);
-            return ResponseEntity.ok(tarefa);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/usuarios/{id}/tarefas")
+    public ResponseEntity<List<TarefaResponseDTO>> listar(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                tarefaService.listarTarefasPorUsuario(id)
+        );
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable long id, @RequestBody TarefaRequestDTO dto) {
-        try {
-            TarefaResponseDTO tarefaAtualizada = tarefaService.atualizar(id, dto);
-            return ResponseEntity.ok(tarefaAtualizada);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping("/tarefas/{id}")
+    public ResponseEntity<TarefaResponseDTO> atualizar(
+            @PathVariable Long id,
+            @RequestBody TarefaRequestDTO dto) {
+
+        return ResponseEntity.ok(
+                tarefaService.atualizar(id, dto)
+        );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable long id) {
-        boolean deletado = tarefaService.deletar(id);
+    @DeleteMapping("/tarefas/{id}")
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
 
-        if (deletado) {
-            return ResponseEntity.ok("Tarefa deletada com sucesso!");
-        }
-
-        return ResponseEntity.notFound().build();
+        tarefaService.deletar(id);
+        return ResponseEntity.ok("Tarefa deletada com sucesso!");
     }
 }
