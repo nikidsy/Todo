@@ -17,3 +17,15 @@ IMPLEMENTAÇÃO DO RELACIONAMENTO
 Usuário
 @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 private List<Tarefa> tarefas = new ArrayList<>();
+
+Tarefa
+@ManyToOne(name = "usuario_id")
+private Usuario usuario;
+
+------
+
+ENDPOINTS
+° POST /usuario/{id}/tarefas
+° GET /usuarios/{id}/tarefas
+° PUT /tarefas/{id}
+° DELETE /tarefas/{id}
