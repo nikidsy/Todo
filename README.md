@@ -14,13 +14,13 @@
 
 ## ° IMPLEMENTAÇÃO DO RELACIONAMENTO
 
-<p align="center"> Usuário </p>
+<p> Usuário </p>
 
 @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 private List<Tarefa> tarefas = new ArrayList<>();
 
 
-<p align="center"> Tarefa </p>
+<p> Tarefa </p>
 
 @ManyToOne(name = "usuario_id")
 private Usuario usuario;
