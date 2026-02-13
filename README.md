@@ -6,9 +6,12 @@
 ## ° OBJETIVO
 
 <p align="center"> Implementar o relacionamento Um pra muitos: </p>
-- Um usuário pode ter varias tarefas
-- Uma tarefa pertence a apenas um usuário
-- Não pode existir tarefa sem usuário
+
+- *Um usuário pode ter varias tarefas*
+
+- *Uma tarefa pertence a apenas um usuário*
+
+- *Não pode existir tarefa sem usuário*
 
 ------
 
